@@ -14,6 +14,7 @@
 # limitations under the License.
 
 # shellcheck disable=SC1090
+
 source ~/.rvm/scripts/rvm
 set -ex
 
@@ -71,6 +72,9 @@ do
   "python")
     # python workers are only run with python2.7 and building with multiple python versions is costly
     python tools/run_tests/run_tests.py -l "$language" -c "$CONFIG" --compiler python2.7 --build_only -j 8
+    ;;
+  "rust")
+    (cd ../tonic/ && cargo build -p tonic-benchmark --release)
     ;;
   *)
     python tools/run_tests/run_tests.py -l "$language" -c "$CONFIG" --build_only -j 8
